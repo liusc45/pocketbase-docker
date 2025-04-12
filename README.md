@@ -37,7 +37,7 @@ PocketBase is an open-source backend (or BaaS) built as a single Go binary that 
 
 ### Defaults
 
-- Default superuser created before serving with `test@test.com` & `Test123!` credentials (make sure to change later)
+- Before starting PocketBase `serve`, default superuser is created (if pb_data directory doesn't exist) with `test@test.com` & `Test123!` credentials (make sure to change later)
 
 ### Building the Image
 
