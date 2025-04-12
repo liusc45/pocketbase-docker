@@ -3,6 +3,7 @@
 - *This is not an official repository*
 - GitHub: [github.com/BakirGracic/pocketbase-docker](https://github.com/BakirGracic/pocketbase-docker)
 - Docker Hub: [bakirg/pocketbase](https://hub.docker.com/repository/docker/bakirg/pocketbase)
+- Images have `latest` and PocketBase version tags (e.g. `0.26.6`)
 
 ---
 
@@ -21,11 +22,11 @@ PocketBase is an open-source backend (or BaaS) built as a single Go binary that 
 
 ## Features of PocketBase Docker
 
-- **Lean & Secure:** Optimized using Alpine and Scratch images
-- **Data Persistence:** Configure volumes for `/pb_data`, `/pb_public`, `/pb_migrations`, and `/pb_hooks`
+- **Lean & Secure:** Optimized using lightweight Alpine images and operation layering
+- **Data Persistence:** Configurable volumes for `pb_data`, `pb_public`, `pb_migrations` and `pb_hooks` persistance
 - **Health Checks:** Built‑in support for Docker health checks
-- **Not official:** Not opinionated, welcoming contributions
-- **Configurable:** Ability to configure most parameters
+- **Unofficial:** Not opinionated, welcoming contributions
+- **Configurable:** Ability to configure some parameters
 
 ## Getting Started
 
@@ -76,11 +77,6 @@ services:
       - "${PWD}/pb_migrations:/pb_migrations" 
       - "${PWD}/pb_hooks:/pb_hooks" 
       - "${PWD}/pb_public:/pb_public" 
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
-      interval: 10s
-      timeout: 5s
-      retries: 3
 ```
 
 ### Accessing PocketBase

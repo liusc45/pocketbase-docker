@@ -1,4 +1,4 @@
-FROM alpine:latest AS downloader
+FROM alpine:latest AS setup
 
 ARG PB_VERSION=0.26.6
 
@@ -6,13 +6,12 @@ RUN apk add --no-cache unzip ca-certificates
 ADD https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip /tmp/pb.zip
 RUN unzip /tmp/pb.zip -d /pb/
 
-
 FROM alpine:latest AS final
 
 WORKDIR /pb
-COPY --from=downloader /pb/pocketbase /pb/pocketbase
+COPY --from=setup /pb/pocketbase /pb/pocketbase
 
-RUN addgroup -S pocketbase && adduser -S -G pocketbase pocketbase
+RUN addgroup -S pocketbase && adduser -SG pocketbase pocketbase
 RUN chown -R pocketbase:pocketbase /pb/ && chmod +x /pb/pocketbase
 USER pocketbase
 
