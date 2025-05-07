@@ -3,7 +3,7 @@
 - *This is not an official nor affiliated repository of PocketBase*
 - Images have `latest` and PocketBase version tags (e.g. `0.27.2`)
 - GitHub: [github.com/BakirGracic/pocketbase-docker](https://github.com/BakirGracic/pocketbase-docker)
-- Docker Hub: [bakirg/pocketbase](https://hub.docker.com/repository/docker/bakirg/pocketbase)
+- Docker Hub: [bakirg/pocketbase-docker](https://hub.docker.com/repository/docker/bakirg/pocketbase-docker)
 
 
 ---
@@ -60,7 +60,7 @@ docker run -d \
   -v ~/pb/migrations:/pb_migrations \
   -v ~/pb/hooks:/pb_hooks \
   -v ~/pb/public:/pb_public \
-  docker.io/bakirg/pocketbase:latest
+  docker.io/bakirg/pocketbase-docker:latest
 ```
 
 #### Using Docker Compose
@@ -68,7 +68,7 @@ docker run -d \
 ```yaml
 services:
   pocketbase_service:
-    image: docker.io/bakirg/pocketbase:latest
+    image: docker.io/bakirg/pocketbase-docker:latest
     container_name: pocketbase_container
     restart: unless-stopped
     ports:
