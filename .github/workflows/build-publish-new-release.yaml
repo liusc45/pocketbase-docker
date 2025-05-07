@@ -40,5 +40,5 @@ jobs:
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/pocketbase-docker:latest
             ${{ vars.DOCKERHUB_USERNAME }}/pocketbase-docker:${{ github.event.release.tag_name }}
-            ghcr.io/pocketbase-docker:latest
-            ghcr.io/pocketbase-docker:${{ github.event.release.tag_name }}
+            ghcr.io/bakirgracic/pocketbase-docker:latest
+            ghcr.io/bakirgracic/pocketbase-docker:${{ github.event.release.tag_name }}
