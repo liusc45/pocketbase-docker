@@ -7,7 +7,6 @@ on:
 permissions:
   contents: read
   packages: write
-#   id-token: write
 
 jobs:
   build-and-push:
@@ -23,13 +22,6 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -38,7 +30,5 @@ jobs:
           build-args: PB_VERSION=${{ github.event.release.tag_name }}
           push: true
           tags: |
-            docker.io/bakirg/pocketbase-docker:latest
-            docker.io/bakirg/pocketbase-docker:${{ github.event.release.tag_name }}
-            ghcr.io/bakirgracic/pocketbase-docker:latest
-            ghcr.io/bakirgracic/pocketbase-docker:${{ github.event.release.tag_name }}
+            docker.io/${{ vars.DOCKERHUB_USERNAME }}/pocketbase-docker:latest
+            docker.io/${{ vars.DOCKERHUB_USERNAME }}/pocketbase-docker:${{ github.event.release.tag_name }}
