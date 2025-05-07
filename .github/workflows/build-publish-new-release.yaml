@@ -3,7 +3,6 @@ name: Build & Publish Docker Image
 on:
   release:
     types: [published]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -41,5 +40,5 @@ jobs:
           tags: |
             docker.io/bakirg/pocketbase-docker:latest
             docker.io/bakirg/pocketbase-docker:${{ github.event.release.tag_name }}
-            ghcr.io/pocketbase-docker:latest
-            ghcr.io/pocketbase-docker:${{ github.event.release.tag_name }}
+            ghcr.io/${{ github.repository_owner }}/pocketbase-docker:latest
+            ghcr.io/${{ github.repository_owner }}/pocketbase-docker:${{ github.event.release.tag_name }}
