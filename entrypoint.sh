@@ -1,11 +1,13 @@
 #!/bin/sh
+
 set -e
 
-if [ ! -d "/pb/pb_data" ]; then
-    echo "Initializing PocketBase with superuser..."
-    /pb/pocketbase superuser create test@test.com Test123!
+if [ ! -d "/app/pb_data" ]; then
+    echo "[INFO] Initializing PocketBase with temporary superuser..."
+    /app/pocketbase superuser create "test@test.com" "Test123!!!"
+    echo "[SUCCESS] PocketBase temporary superuser created. Don't forget to change credentails!"
 else
-    echo "Database already exists, skipping superuser creation..."
+    echo "[INFO] pb_data already exists, skipping temporary superuser creation..."
 fi
 
 exec "$@"

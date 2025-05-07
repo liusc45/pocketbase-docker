@@ -1,9 +1,10 @@
 # PocketBase Docker
 
-- *This is not an official repository*
+- *This is not an official nor affiliated repository of PocketBase*
+- Images have `latest` and PocketBase version tags (e.g. `0.27.2`)
 - GitHub: [github.com/BakirGracic/pocketbase-docker](https://github.com/BakirGracic/pocketbase-docker)
 - Docker Hub: [bakirg/pocketbase](https://hub.docker.com/repository/docker/bakirg/pocketbase)
-- Images have `latest` and PocketBase version tags (e.g. `0.26.6`)
+
 
 ---
 
@@ -20,7 +21,7 @@ PocketBase is an open-source backend (or BaaS) built as a single Go binary that 
 - Extendable using **Go** or **JavaScript**
 - and much [more](https://pocketbase.io/)
 
-## Features of PocketBase Docker
+## Features of `pocketbase-docker`
 
 - **Lean & Secure:** Optimized using lightweight Alpine images and operation layering
 - **Data Persistence:** Configurable volumes for `pb_data`, `pb_public`, `pb_migrations` and `pb_hooks` persistance
@@ -37,9 +38,9 @@ PocketBase is an open-source backend (or BaaS) built as a single Go binary that 
 
 ### Defaults
 
-- Before starting PocketBase `serve`, default superuser is created (if pb_data directory doesn't exist) with `test@test.com` & `Test123!` credentials (make sure to change later)
+- Before starting PocketBase service, default superuser is created (in case `pb_data` directory doesn't exist) with `test@test.com` & `Test123!!!` credentials. Make sure to change credentials later!
 
-### Building the Image
+### Building the Image Yourself
 
 ```bash
 git clone https://github.com/BakirGracic/pocketbase-docker
@@ -55,10 +56,10 @@ docker build -t pocketbase:test_build .
 docker run -d \
   --name pocketbase \
   -p 8090:8090 \
-  -v $(pwd)/pb_data:/pb_data \
-  -v $(pwd)/pb_migrations:/pb_migrations \
-  -v $(pwd)/pb_hooks:/pb_hooks \
-  -v $(pwd)/pb_public:/pb_public \
+  -v ~/pb/data:/pb_data \
+  -v ~/pb/migrations:/pb_migrations \
+  -v ~/pb/hooks:/pb_hooks \
+  -v ~/pb/public:/pb_public \
   docker.io/bakirg/pocketbase:latest
 ```
 
@@ -66,17 +67,23 @@ docker run -d \
 
 ```yaml
 services:
-  pocketbase:
+  pocketbase_service:
     image: docker.io/bakirg/pocketbase:latest
-    container_name: pocketbase
+    container_name: pocketbase_container
     restart: unless-stopped
     ports:
       - "8090:8090"
     volumes:
-      - "${PWD}/pb_data:/pb_data"
-      - "${PWD}/pb_migrations:/pb_migrations" 
-      - "${PWD}/pb_hooks:/pb_hooks" 
-      - "${PWD}/pb_public:/pb_public" 
+      - "~/pb/data:/pb_data"
+      - "~/pb/migrations:/pb_migrations" 
+      - "~/pb/hooks:/pb_hooks" 
+      - "~/pb/public:/pb_public" 
+    healthcheck:
+      test: wget -q --spider http://localhost:8090/api/health || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 ```
 
 ### Accessing PocketBase

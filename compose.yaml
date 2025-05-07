@@ -1,0 +1,18 @@
+services:
+  pocketbase_service:
+    image: docker.io/bakirg/pocketbase:latest
+    container_name: pocketbase_container
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - "~/pb/data:/pb_data"
+      - "~/pb/migrations:/pb_migrations" 
+      - "~/pb/hooks:/pb_hooks" 
+      - "~/pb/public:/pb_public" 
+    healthcheck:
+      test: wget -q --spider http://localhost:8090/api/health || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
