@@ -20,14 +20,14 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
+          username: bakirg
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Log in to GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: BakirGracic
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
@@ -38,7 +38,7 @@ jobs:
           build-args: PB_VERSION=${{ github.event.release.tag_name }}
           push: true
           tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ github.repository }}:${{ github.event.release.tag_name }}
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.event.release.tag_name }}
+            docker.io/bakirg/pocketbase-docker:latest
+            docker.io/bakirg/pocketbase-docker:${{ github.event.release.tag_name }}
+            ghcr.io/pocketbase-docker:latest
+            ghcr.io/pocketbase-docker:${{ github.event.release.tag_name }}
