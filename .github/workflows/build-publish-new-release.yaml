@@ -38,7 +38,7 @@ jobs:
           build-args: PB_VERSION=${{ github.event.release.tag_name }}
           push: true
           tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/pocketbase-docker:latest
-            ${{ vars.DOCKERHUB_USERNAME }}/pocketbase-docker:${{ github.event.release.tag_name }}
-            ghcr.io/bakirgracic/pocketbase-docker:latest
-            ghcr.io/bakirgracic/pocketbase-docker:${{ github.event.release.tag_name }}
+            bakirg/pocketbase-docker:latest
+            bakirg/pocketbase-docker:${{ github.event.release.tag_name }}
+            ghcr.io/pocketbase-docker:latest
+            ghcr.io/pocketbase-docker:${{ github.event.release.tag_name }}
