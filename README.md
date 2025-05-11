@@ -56,10 +56,10 @@ docker build -t pocketbase:test_build .
 docker run -d \
   --name pocketbase \
   -p 8090:8090 \
-  -v ~/pb/data:/pb_data \
-  -v ~/pb/migrations:/pb_migrations \
-  -v ~/pb/hooks:/pb_hooks \
-  -v ~/pb/public:/pb_public \
+  -v ~/pb/data:/app/pb_data \
+  -v ~/pb/migrations:/app/pb_migrations \
+  -v ~/pb/hooks:/app/pb_hooks \
+  -v ~/pb/public:/app/pb_public \
   docker.io/bakirg/pocketbase-docker:latest
 ```
 
@@ -74,10 +74,10 @@ services:
     ports:
       - "8090:8090"
     volumes:
-      - "~/pb/data:/pb_data"
-      - "~/pb/migrations:/pb_migrations" 
-      - "~/pb/hooks:/pb_hooks" 
-      - "~/pb/public:/pb_public" 
+      - "~/pb/data:/app/pb_data"
+      - "~/pb/migrations:/app/pb_migrations" 
+      - "~/pb/hooks:/app/pb_hooks" 
+      - "~/pb/public:/app/pb_public" 
     healthcheck:
       test: wget -q --spider http://localhost:8090/api/health || exit 1
       interval: 30s
