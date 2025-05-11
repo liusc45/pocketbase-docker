@@ -1,4 +1,4 @@
-ARG PB_VERSION=0.27.2
+ARG PB_VERSION=0.28.0
 
 FROM alpine:latest AS setup
 
