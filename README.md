@@ -3,8 +3,7 @@
 - *This is not an official nor affiliated repository of PocketBase*
 - Images have `latest` and PocketBase version tags (e.g. `0.27.2`)
 - GitHub: [github.com/BakirGracic/pocketbase-docker](https://github.com/BakirGracic/pocketbase-docker)
-- Docker Hub: [bakirg/pocketbase-docker](https://hub.docker.com/repository/docker/bakirg/pocketbase-docker)
-
+- Docker Hub: [bakirg/pocketbase-docker](https://hub.docker.com/r/bakirg/pocketbase-docker)
 
 ---
 
