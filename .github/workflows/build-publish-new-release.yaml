@@ -1,4 +1,4 @@
-name: Build & Publish Docker Image
+name: Build & Publish Multi-Arch Docker Image
 
 on:
   release:
@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -15,11 +15,25 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: build and push
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          buildkitd-flags: --debug
+          install: true
+
+      - name: Build and push multi-arch image
         uses: docker/build-push-action@v6
         with:
-          build-args: PB_VERSION=${{ github.event.release.tag_name }}
+          context: .
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: |
             bakirg/pocketbase-docker:latest
             bakirg/pocketbase-docker:${{ github.event.release.tag_name }}
+          build-args: |
+            PB_VERSION=${{ github.event.release.tag_name }}
