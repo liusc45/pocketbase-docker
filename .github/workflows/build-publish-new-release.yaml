@@ -3,7 +3,12 @@ name: Build & Publish Multi-Arch Docker Image
 on:
   release:
     types: [published]
-  workflow_dispatch:  # ✅ permite ejecución manual
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'PocketBase release tag (e.g. v0.22.8)'
+        required: true
+        default: 'v0.22.8'
 
 jobs:
   build-and-push:
@@ -13,11 +18,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set release tag manually if not from release event
-        id: set_tag
+      - name: Set release tag
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "RELEASE_TAG=manual" >> "$GITHUB_ENV"
+            echo "RELEASE_TAG=${{ github.event.inputs.tag }}" >> "$GITHUB_ENV"
           else
             echo "RELEASE_TAG=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
           fi
