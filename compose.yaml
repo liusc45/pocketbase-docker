@@ -1,6 +1,6 @@
 services:
   pocketbase_service:
-    image: docker.io/bakirg/pocketbase-docker:latest
+    image: ghcr.io/liusc45/pocketbase-docker:lates
     container_name: pocketbase_container
     restart: unless-stopped
     ports:
