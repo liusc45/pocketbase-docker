@@ -9,11 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Log in to Docker Hub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -33,7 +37,7 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: |
-            bakirg/pocketbase-docker:latest
-            bakirg/pocketbase-docker:${{ github.event.release.tag_name }}
+            ghcr.io/${{ github.repository_owner }}/pocketbase-docker:latest
+            ghcr.io/${{ github.repository_owner }}/pocketbase-docker:${{ github.event.release.tag_name }}
           build-args: |
             PB_VERSION=${{ github.event.release.tag_name }}
