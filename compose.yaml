@@ -1,15 +1,21 @@
+version: "3.9"
+
 services:
   pocketbase_service:
-    image: ghcr.io/liusc45/pocketbase-docker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PB_VERSION: "0.28.4"   # ⬅️ Cámbialo según la versión que quieras compilar
     container_name: pocketbase_container
     restart: unless-stopped
     ports:
       - "8090:8090"
     volumes:
       - "~/pb/data:/app/pb_data"
-      - "~/pb/migrations:/app/pb_migrations" 
-      - "~/pb/hooks:/app/pb_hooks" 
-      - "~/pb/public:/app/pb_public" 
+      - "~/pb/migrations:/app/pb_migrations"
+      - "~/pb/hooks:/app/pb_hooks"
+      - "~/pb/public:/app/pb_public"
     healthcheck:
       test: wget -q --spider http://localhost:8090/api/health || exit 1
       interval: 30s
